@@ -1,0 +1,18 @@
+<div class="w-full">
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Users</h1>
+  </div>
+  <div class="min-w-full my-8">
+    <div class="table font-bold min-w-full">
+      <div>Name</div>
+      <div>Email</div>
+      <div>Age</div>
+      <div>Phone</div>
+      <div></div>
+    </div>
+    <%= turbo_frame_tag "new-user-form", src: new_user_path %>
+    <div id="users">
+      <%= render @users %>
+    </div>
+  </div>
+</div>
