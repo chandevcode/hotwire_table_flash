@@ -13,20 +13,20 @@ class UsersController < ApplicationController
   end
 
   def edit; end
-
+  
   def create
     @user = User.new(user_params)
 
     if @user.save
-      flash.now[:notice] = 'User was successfully created.'
+      flash.now[:notice] = "User was successfully created."
       render turbo_stream: [
-        turbo_stream.prepend('users', @user),
+        turbo_stream.prepend("users", @user),
         turbo_stream.replace(
-          'form_user',
-          partial: 'form',
+          "form_user",
+          partial: "form",
           locals: { user: User.new }
         ),
-        turbo_stream.replace('notice', partial: 'layouts/flash')
+        turbo_stream.replace("notice", partial: "layouts/flash")
       ]
     else
       render :new, status: :unprocessable_entity
@@ -35,35 +35,31 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      flash.now[:notice] = 'User Updated.'
+      flash.now[:notice] = "User was successfully updated."
       render turbo_stream: [
         turbo_stream.replace(@user, @user),
-        turbo_stream.replace('notice', partial: 'layouts/flash')
+        turbo_stream.replace("notice", partial: "layouts/flash")
       ]
     else
       render :edit, status: :unprocessable_entity
     end
   end
-  # PATCH/PUT /users/1 or /users/1.json
 
-  # DELETE /users/1 or /users/1.json
   def destroy
     @user.destroy
-    flash.now[:alert] = 'Deleted'
+    flash.now[:notice] = "User was successfully destroyed."
     render turbo_stream: [
       turbo_stream.remove(@user),
-      turbo_stream.replace('notice', partial: 'layouts/flash')
+      turbo_stream.replace("notice", partial: "layouts/flash")
     ]
   end
 
   private
+    def set_user
+      @user = User.find(params[:id])
+    end
 
-  def set_user
-    @user = User.find(params[:id])
-  end
-
-  def user_params
-    params.require(:user).permit(:name, :email, :age, :dob, :phone)
-  end
+    def user_params
+      params.require(:user).permit(:name, :email, :age, :dob, :phone)
+    end
 end
-

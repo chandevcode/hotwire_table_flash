@@ -4,29 +4,29 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   connect() {
     const node = this.element;
-    this.animateCSS("rubberBand").then(() => {
-      this.animateCSS("zoomOut").then(() => {
+
+    this.animateCSS("slideInUp").then(() => {
+      setTimeout(() => {
         node.style.visibility = "hidden";
-      });
+      }, 3000);
     });
-    setTimeout(() => {
-      node.remove();
-    }, 5000);
   }
 
   animateCSS(animation) {
+    // We create a Promise and return it
     return new Promise((resolve, _reject) => {
       const animationName = `animate__${animation}`;
       const node = this.element;
       node.classList.add("animate__animated", animationName);
 
-      //clean classes resolve when animation en d
+      // When the animation ends, we clean the classes and resolve the Promise
       function handleAnimationEnd(event) {
         event.stopPropagation();
         node.classList.remove("animate__animated", animationName);
         resolve("Animation ended");
       }
-      node.addEventListened("animationend", handleAnimationEnd);
+
+      node.addEventListener("animationend", handleAnimationEnd);
     });
   }
 }
