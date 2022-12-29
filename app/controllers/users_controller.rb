@@ -49,7 +49,7 @@ class UsersController < ApplicationController
   # DELETE /users/1 or /users/1.json
   def destroy
     @user.destroy
-    flash.now[:notice] = 'Deleted'
+    flash.now[:alert] = 'Deleted'
     render turbo_stream: [
       turbo_stream.remove(@user),
       turbo_stream.replace('notice', partial: 'layouts/flash')
