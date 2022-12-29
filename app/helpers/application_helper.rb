@@ -1,6 +1,6 @@
 module ApplicationHelper
   def age_for(date)
-    Date.toda.year - date.year
+    Date.today.year - date.year
   end
 
   def inline_error_for(field, form_obj)
